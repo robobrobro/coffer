@@ -1,1 +1,1 @@
-""" Functions and classes dealing with foe commands. """
+""" Functions and classes dealing with commands. """

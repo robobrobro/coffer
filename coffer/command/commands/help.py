@@ -30,7 +30,7 @@ def execute(parsed_args=None, interactive=False, *args, **kwargs):
         parser = argparse.ArgumentParser(prog=get_program_name(), description=description,
                 usage=usage, add_help=False)
 
-        # Recursively search through foe command modules and
+        # Recursively search through command modules and
         # add an argument to the parser for each command.
         group = parser.add_argument_group(title=group_title)
         for loader, name, ispkg in walk_packages(coffer_commands.__path__):
@@ -47,7 +47,7 @@ def execute(parsed_args=None, interactive=False, *args, **kwargs):
         parser.print_help()
         return True
     else:
-        # Recursively search through foe command modules.
+        # Recursively search through command modules.
         for loader, name, ispkg in walk_packages(coffer_commands.__path__):
             module = loader.find_module(name).load_module(name)
             module_commands = getattr(module, 'commands', [])
