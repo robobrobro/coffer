@@ -1,0 +1,14 @@
+language: python
+    - "2.7"
+    - "3.2"
+    - "3.3"
+    - "3.4"
+    - "3.5"
+    - "3.5-dev"
+    - "nightly"
+
+# command to install dependencies
+# TODO install: "pip install -r requirements.txt"
+
+# command to run tests
+script: nosetests --with-coverage --cover-package=coffer --cover-branches --cover-erase --cover-html --cover-html-dir=htmlcov -v
