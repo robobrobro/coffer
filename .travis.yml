@@ -18,7 +18,7 @@ install:
 
 # command to run tests
 script: 
-    - nosetests --with-coverage --cover-package=coffer --cover-branches --cover-erase --cover-html --cover-html-dir=htmlcov -v
+    - ./run_tests.sh
 
 after_success:
     - bash <(curl -s https://codecov.io/bash) 
