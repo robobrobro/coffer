@@ -11,7 +11,6 @@ import re
 
 from . import color
 
-FILENAME = os.path.expanduser(os.path.expandvars((os.environ.get('COFFER_CONFIG', '~/.cofferrc'))))
 _defaults = {
         'interactive': {
             'PROMPT': '[coffer]? ',
@@ -44,8 +43,8 @@ def _config_fixup(cfg, *args, **kwargs):
 def load_config(*args, **kwargs):
     cfg = ConfigParser()
 
-    if FILENAME:
-        cfg.read(FILENAME)
+    filename = os.path.expanduser(os.path.expandvars((os.environ.get('COFFER_CONFIG', '~/.cofferrc'))))
+    cfg.read(filename)
 
     # Ensure defaults exist
     _ensure_defaults(cfg)
