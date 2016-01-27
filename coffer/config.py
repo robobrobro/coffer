@@ -8,6 +8,7 @@ else:
     basestring = str
 import os
 import re
+import string
 
 from . import color
 
@@ -44,6 +45,13 @@ def _config_fixup(cfg, *args, **kwargs):
             value = re.sub(r'\\(\]|002|[Xx]02)', '\x02', value)
             cfg.set(section, option, value)
 
+def _wrap_spaces(cfg, *args, **kwargs):
+    for section in cfg.sections():
+        for option in cfg.options(section):
+            val = cfg.get(section, option)
+            if val[0] in string.whitespace or val[-1] in string.whitespace:
+                cfg.set(section, option, '"{}"'.format(val))
+
 def load_config(*args, **kwargs):
     cfg = ConfigParser()
     filename = _get_config_filename()
@@ -58,6 +66,8 @@ def load_config(*args, **kwargs):
     return cfg
 
 def save_config(cfg, *args, **kwargs):
+    _wrap_spaces(cfg)
+
     filename = _get_config_filename()
     try:
         with open(filename, 'w') as f:
