@@ -151,7 +151,6 @@ def test_save_config_with_modifications(*args, **kwargs):
 
     cfg.add_section('test')
     cfg.set('test', 'test', 'test')
-    print '[{}]'.format(cfg.get('interactive', 'prompt'))
 
     with tempfile.NamedTemporaryFile() as tmpfile:
         environ = {'COFFER_CONFIG': tmpfile.name}
@@ -161,7 +160,6 @@ def test_save_config_with_modifications(*args, **kwargs):
 
     new_dict = {'test': {'test': 'test'}}
     new_dict.update(config._defaults)
-    print '[{}]'.format(loaded_cfg.get('interactive', 'prompt'))
     assert_config_equals(loaded_cfg, new_dict)
 
 def test_save_config_to_readonly_file_no_logger(*args, **kwargs):
