@@ -19,6 +19,10 @@ _defaults = {
         },
 }
 
+def _get_config_filename(*args, **kwargs):
+    filename = os.environ.get('COFFER_CONFIG', '~/.cofferrc')
+    return os.path.expanduser(os.path.expandvars(filename))
+
 def _ensure_defaults(cfg, *args, **kwargs):
     for section, optdata in _defaults.items():
         if not cfg.has_section(section):
@@ -42,8 +46,7 @@ def _config_fixup(cfg, *args, **kwargs):
 
 def load_config(*args, **kwargs):
     cfg = ConfigParser()
-
-    filename = os.path.expanduser(os.path.expandvars((os.environ.get('COFFER_CONFIG', '~/.cofferrc'))))
+    filename = _get_config_filename()
     cfg.read(filename)
 
     # Ensure defaults exist
@@ -55,8 +58,9 @@ def load_config(*args, **kwargs):
     return cfg
 
 def save_config(cfg, *args, **kwargs):
+    filename = _get_config_filename()
     try:
-        with open(FILENAME, 'w') as f:
+        with open(filename, 'w') as f:
             cfg.write(f)
     except (IOError, OSError) as e:
         logger = kwargs.get('logger', None)
